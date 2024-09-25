@@ -2,7 +2,7 @@ import json
 from flask import Flask, request
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage, StickerSendMessage, ImageSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, StickerSendMessage, ImageSendMessage, LocationSendMessage
 from pyexpat.errors import messages
 
 app = Flask(__name__)
@@ -26,6 +26,9 @@ def linebot():
                 img_url = 'https://instagram.ftpe7-1.fna.fbcdn.net/v/t51.29350-15/277795588_1330595974107864_9164530998079126436_n.jpg?stp=dst-jpg_e35&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE2NTMuc2RyLmYyOTM1MC5kZWZhdWx0X2ltYWdlIn0&_nc_ht=instagram.ftpe7-1.fna.fbcdn.net&_nc_cat=100&_nc_ohc=Bs4NORQG2o0Q7kNvgFTLyhn&edm=ACpohRwBAAAA&ccb=7-5&ig_cache_key=MjgwNTMxNjM3ODk3ODIwNzQ0Ng%3D%3D.3-ccb7-5&oh=00_AYB69C1x0xeZjDHC8FIZYeoun1_gcgmRfUmJ0R48WlPYzg&oe=66F9ACE2&_nc_sid=2d3a3f'
                 img_message = ImageSendMessage(original_content_url=img_url, preview_image_url=img_url) #發圖片
                 linebot_api.reply_message(token, img_message)                                           #回傳訊息
+            elif message == '101':
+                location = LocationSendMessage(title='台北 101', address='110台北市信義區信義路五段7號', latitude='25.034095712145003', longitude='121.56489941996108') #建立座標
+                linebot_api.reply_message(token, location)                                              #回傳訊息
             linebot_api.reply_message(token, TextSendMessage(message))  # 回傳訊息
 
         elif json_data['events'][0]['message']['type'] == 'sticker':
