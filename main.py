@@ -19,16 +19,16 @@ def linebot():
         token = json_data['events'][0]['replyToken']         # 提取第一個事件的token
 
         if json_data['events'][0]['type'] == 'sticker':
-            stickerId = json_data['events'][0]['message']['stickerId']  # 取得 stickerId
-            packageId = json_data['events'][0]['message']['packageId']  # 取得 packageId
-            sticker_message = StickerSendMessage(sticker_id=stickerId, package_id=packageId)  # 設定要回傳的表情貼圖
-            linebot_api.reply_message(token, sticker_message)           # 回傳訊息
+            sticker = json_data['events'][0]['message']['stickerId']  # 取得 stickerId
+            package = json_data['events'][0]['message']['packageId']  # 取得 packageId
+            sticker_request = StickerSendMessage(sticker_id=sticker, package_id=package)  # 設定要回傳的表情貼圖
+            linebot_api.reply_message(token, sticker_request)           # 回傳訊息
         elif json_data['events'][0]['type'] == 'text':
             message = json_data['events'][0]['message']['text']         # 取得訊息文字
             linebot_api.reply_message(token, TextSendMessage(message))  # 回傳訊息
 
     except:
-        print(body)                                          # 如果錯誤，直接輸出內容
+        print(body)                                          # 如果錯誤，輸出訊息內容
     return 'Success'                                         # Line伺服器會記錄回應，並把他記為成功的標誌。
 
 if __name__ == "__main__":
