@@ -56,7 +56,7 @@ def reply_message(text):
     location_data = {
         '洪幹家':{
             'title':'洪幹家',
-            'address':'100台北市松山區延吉街27-1號4樓',
+            'address':'100台北市松山區延吉街27-1號',
             'latitude':'25.045977749227838',
             'longitude':'121.55373368255879'
         }
