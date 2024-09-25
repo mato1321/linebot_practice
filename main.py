@@ -2,7 +2,9 @@ import json
 from flask import Flask, request
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage, StickerSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, StickerSendMessage, ImageSendMessage
+from pyexpat.errors import messages
+
 app = Flask(__name__)
 @app.route("/", methods=['POST'])
 #重複訊息
@@ -18,15 +20,18 @@ def linebot():
         handler.handle(body, signature)                      # 確認是否是來自真的line傳來的訊息
         token = json_data['events'][0]['replyToken']         # 提取第一個事件的token
 
-        if json_data['events'][0]['type'] == 'sticker':
-            sticker = json_data['events'][0]['message']['stickerId']  # 取得 stickerId
-            package = json_data['events'][0]['message']['packageId']  # 取得 packageId
+        if json_data['events'][0]['message']['type'] == 'text':
+            message = json_data['events'][0]['message']['text']         # 取得訊息文字
+            if message =='章祖綸':
+                img_url = 'https://instagram.ftpe7-1.fna.fbcdn.net/v/t51.29350-15/277795588_1330595974107864_9164530998079126436_n.jpg?stp=dst-jpg_e35&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE2NTMuc2RyLmYyOTM1MC5kZWZhdWx0X2ltYWdlIn0&_nc_ht=instagram.ftpe7-1.fna.fbcdn.net&_nc_cat=100&_nc_ohc=Bs4NORQG2o0Q7kNvgFTLyhn&edm=ACpohRwBAAAA&ccb=7-5&ig_cache_key=MjgwNTMxNjM3ODk3ODIwNzQ0Ng%3D%3D.3-ccb7-5&oh=00_AYB69C1x0xeZjDHC8FIZYeoun1_gcgmRfUmJ0R48WlPYzg&oe=66F9ACE2&_nc_sid=2d3a3f'
+                img_message = ImageSendMessage(original_content_url=img_url, preview_image_url=img_url) #
+                linebot_api.reply_message(token, img_message)                                           #
+            linebot_api.reply_message(token, TextSendMessage(message))  # 回傳訊息
+        elif json_data['events'][0]['message']['type'] == 'sticker':
+            package = json_data['events'][0]['message']['packageId']    # 識別貼圖包的ID
+            sticker = json_data['events'][0]['message']['stickerId']    # 識別貼圖的ID
             sticker_request = StickerSendMessage(sticker_id=sticker, package_id=package)  # 設定要回傳的表情貼圖
             linebot_api.reply_message(token, sticker_request)           # 回傳訊息
-        elif json_data['events'][0]['type'] == 'text':
-            message = json_data['events'][0]['message']['text']         # 取得訊息文字
-            linebot_api.reply_message(token, TextSendMessage(message))  # 回傳訊息
-
     except:
         print(body)                                          # 如果錯誤，輸出訊息內容
     return 'Success'                                         # Line伺服器會記錄回應，並把他記為成功的標誌。
