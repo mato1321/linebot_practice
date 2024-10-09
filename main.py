@@ -8,6 +8,7 @@ import Email
 import database
 from database import *
 from  Email import *
+
 app = Flask(__name__)
 @app.route("/", methods=['POST'])
 def linebot():
