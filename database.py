@@ -16,7 +16,7 @@ def reply_message(text):
         }
     }
     image_data = {
-        '章祖綸':'https://scontent-tpe1-1.cdninstagram.com/v/t51.29350-15/277795588_1330595974107864_9164530998079126436_n.jpg?stp=dst-jpg_e35&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE2NTMuc2RyLmYyOTM1MC5kZWZhdWx0X2ltYWdlIn0&_nc_ht=scontent-tpe1-1.cdninstagram.com&_nc_cat=100&_nc_ohc=Bs4NORQG2o0Q7kNvgHlqGUT&_nc_gid=e59c2bcccff04b24848d457804b9f042&edm=AP4sbd4BAAAA&ccb=7-5&ig_cache_key=MjgwNTMxNjM3ODk3ODIwNzQ0Ng%3D%3D.3-ccb7-5&oh=00_AYCU20YID74XOEG0iYyNWzt7ePSs5ib1Nrrqqxhr_3KF1A&oe=66F9E522&_nc_sid=7a9f4b'
+        '章祖綸':'https://instagram.ftpe8-2.fna.fbcdn.net/v/t51.29350-15/277795588_1330595974107864_9164530998079126436_n.jpg?stp=dst-jpg_e35&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE2NTMuc2RyLmYyOTM1MC5kZWZhdWx0X2ltYWdlIn0&_nc_ht=instagram.ftpe8-2.fna.fbcdn.net&_nc_cat=100&_nc_ohc=0LStoLer2poQ7kNvgFc_CHC&_nc_gid=425ce348c7d94defb535b0685476e4f0&edm=AP4sbd4BAAAA&ccb=7-5&ig_cache_key=MjgwNTMxNjM3ODk3ODIwNzQ0Ng%3D%3D.3-ccb7-5&oh=00_AYAAjmbC5GagIEsUeupK8gpZXi02cWYW9RRSSrwe65Ch0A&oe=670BE9A2&_nc_sid=7a9f4b'
     }
     reply = ['text',text] # 預設回覆的文字就是收到的訊息
     if text in message_data:

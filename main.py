@@ -4,9 +4,10 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, StickerSendMessage, ImageSendMessage, LocationSendMessage
 from pyexpat.errors import messages
+import Email
 import database
 from database import *
-
+from  Email import *
 app = Flask(__name__)
 @app.route("/", methods=['POST'])
 def linebot():
@@ -33,11 +34,21 @@ def linebot():
                                                                         address=message[1]['address'],
                                                                         latitude=message[1]['latitude'],
                                                                         longitude=message[1]['longitude']))
+
         if json_data['events'][0]['message']['type'] == 'sticker':
             package = json_data['events'][0]['message']['packageId']    # 識別貼圖包的ID
             sticker = json_data['events'][0]['message']['stickerId']    # 識別貼圖的ID
             sticker_request = StickerSendMessage(sticker_id=sticker, package_id=package)  # 設定要回傳的表情貼圖
             linebot_api.reply_message(token, sticker_request)           # 回傳訊息
+
+        msgID = json_data['events'][0]['message']['id']
+        if json_data['events'][0]['message']['type'] == 'image':
+            message_content = linebot_api.get_message_content(msgID) # 下載圖片
+            Email.sendEmail('傳送line收到的圖片', message_content.content, f'{msgID}.jpg', 'charleskao811@gmail.com', 'sdce hath widj kyqe')
+
+        if json_data['events'][0]['message']['type'] == 'video':
+            message_content = linebot_api.get_message_content(msgID) # 下載影片
+            Email.sendEmail('傳送line收到的影片', message_content.content, f'{msgID}.mp4', 'charleskao811@gmail.com', 'sdce hath widj kyqe')
     except:
         print(body)                                          # 如果錯誤，輸出訊息內容
     return 'Success'                                         # Line伺服器會記錄回應，並把他記為成功的標誌。
