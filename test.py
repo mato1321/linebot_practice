@@ -4,7 +4,7 @@ from googleapiclient.http import MediaFileUpload
 
 UPLOAD_FOLDER = '1V1GKfvrV03Z8wNWybO90gbeu4EWzCGjk'
 SCOPES = ['https://www.googleapis.com/auth/drive']
-SERVICE_ACCOUNT_FILE = 'C:\password\drive.json'  # 金鑰檔案
+SERVICE_ACCOUNT_FILE = 'C:\Coding\DataVisualization_report\drive.json'  # 金鑰檔案
 
 # 建立憑證
 creds = service_account.Credentials.from_service_account_file(
@@ -12,7 +12,7 @@ creds = service_account.Credentials.from_service_account_file(
 # 串連服務
 service = build('drive', 'v3', credentials=creds)
 
-filename = "mona-s.jpg"            # 要上傳檔案的路徑與名稱
+filename = "C:\\Users\\user\\OneDrive - 東吳大學\\桌面\\20210413004121.jpg"            # 要上傳檔案的路徑與名稱
 media = MediaFileUpload(filename)  # 建立檔案物件
 file = {'name': filename, 'parents': [UPLOAD_FOLDER]}
 
