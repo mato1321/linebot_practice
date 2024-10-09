@@ -1,14 +1,14 @@
 import json
 from flask import Flask, request
 from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
+#from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, StickerSendMessage, ImageSendMessage, LocationSendMessage
-from pyexpat.errors import messages
+#from pyexpat.errors import messages
 import Email
-import database
+#import database
 from database import *
-from  Email import *
-import drive_image
+#from  Email import *
+#import drive_image
 from drive_image import *
 
 app = Flask(__name__)
@@ -46,7 +46,7 @@ def linebot():
             linebot_api.reply_message(token, sticker_request)           # 回傳訊息
 
         if json_data['events'][0]['message']['type'] == 'image':
-            linebot_api.reply_message(token, TextSendMessage(upload_drive(linebot_api, json_data)))  # 上傳雲端並且回傳訊息
+            linebot_api.reply_message(token, TextSendMessage(upload_drive(linebot_api, json_data, msgID)))  # 上傳雲端並且回傳訊息
             message_content = linebot_api.get_message_content(msgID) # 下載圖片
             Email.sendEmail('傳送line收到的圖片', message_content.content, f'{msgID}.jpg', 'charleskao811@gmail.com', 'sdce hath widj kyqe')
 
