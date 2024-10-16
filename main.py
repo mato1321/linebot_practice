@@ -1,4 +1,6 @@
 import json
+import time
+import requests
 from flask import Flask, request
 from linebot import LineBotApi, WebhookHandler
 #from linebot.exceptions import InvalidSignatureError
@@ -25,15 +27,22 @@ def linebot():
         handler.handle(body, signature)  # 確認是否是來自真的line傳來的訊息
         token = json_data['events'][0]['replyToken']  # 提取第一個事件的token
         msgID = json_data['events'][0]['message']['id'] #提取訊息的ID編號
+        user_id = json_data['events'][0]['source']['userId']
 
         if json_data['events'][0]['message']['type'] == 'text':
             message = reply_message(json_data['events'][0]['message']['text']) # 取得訊息文字
-            if message[0] == 'text':     # 判斷回傳的是不是文字關鍵字
+            if message[1] == '天氣':
+                img_url = f'https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0058-001.png?{time.time_ns()}'
+                img_message = ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)
+                linebot_api.reply_message(token, img_message)  # 回傳訊息
+                print(time.time_ns())
+
+            elif message[0] == 'text':     # 判斷回傳的是不是文字關鍵字
                 linebot_api.reply_message(token, TextSendMessage(text=message[1]))
-            if message[0] == 'image':    # 判斷回傳的是不是照片關鍵字
+            elif message[0] == 'image':    # 判斷回傳的是不是照片關鍵字
                 linebot_api.reply_message(token, ImageSendMessage(original_content_url=message[1],
                                                                   preview_image_url=message[1]))
-            if message[0] == 'location': # 判斷回傳的是不是地點關鍵字
+            elif message[0] == 'location': # 判斷回傳的是不是地點關鍵字
                 linebot_api.reply_message(token, LocationSendMessage(title=message[1]['title'],
                                                                         address=message[1]['address'],
                                                                         latitude=message[1]['latitude'],
