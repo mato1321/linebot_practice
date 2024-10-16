@@ -12,6 +12,8 @@ from database import *
 #from  Email import *
 #import drive_image
 from drive_image import *
+import earthquake
+from earthquake import *
 
 app = Flask(__name__)
 @app.route("/", methods=['POST'])
@@ -36,7 +38,12 @@ def linebot():
                 img_message = ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)
                 linebot_api.reply_message(token, img_message)  # 回傳訊息
                 print(time.time_ns())
-
+            elif message[1] == '地震':
+                reply = earthquake.earth_quake()  # 執行函式，讀取數值
+                text_message = TextSendMessage(text=reply[0])  # 取得文字內容
+                linebot_api.reply_message(token, text_message)  # 傳送文字
+                linebot_api.push_message(user_id, ImageSendMessage(original_content_url=reply[1],
+                                                                    preview_image_url=reply[1]))  # 傳送圖片
             elif message[0] == 'text':     # 判斷回傳的是不是文字關鍵字
                 linebot_api.reply_message(token, TextSendMessage(text=message[1]))
             elif message[0] == 'image':    # 判斷回傳的是不是照片關鍵字
