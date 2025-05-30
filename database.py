@@ -8,15 +8,15 @@ def reply_message(text):
         'help':'有什麼要幫忙的嗎？'
     }
     location_data = {
-        '洪幹家':{
-            'title':'洪幹家',
-            'address':'100台北市松山區延吉街27-1號',
-            'latitude':'25.045977749227838',
-            'longitude':'121.55373368255879'
+        '國父紀念館':{
+            'title':'國父紀念館',
+            'address':'110台北市信義區仁愛路四段505號',
+            'latitude':'25.040029',
+            'longitude':'121.560241'
         }
     }
     image_data = {
-        '章祖綸':'https://instagram.ftpe8-2.fna.fbcdn.net/v/t51.29350-15/277795588_1330595974107864_9164530998079126436_n.jpg?stp=dst-jpg_e35&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xNDQweDE2NTMuc2RyLmYyOTM1MC5kZWZhdWx0X2ltYWdlIn0&_nc_ht=instagram.ftpe8-2.fna.fbcdn.net&_nc_cat=100&_nc_ohc=0LStoLer2poQ7kNvgFc_CHC&_nc_gid=425ce348c7d94defb535b0685476e4f0&edm=AP4sbd4BAAAA&ccb=7-5&ig_cache_key=MjgwNTMxNjM3ODk3ODIwNzQ0Ng%3D%3D.3-ccb7-5&oh=00_AYAAjmbC5GagIEsUeupK8gpZXi02cWYW9RRSSrwe65Ch0A&oe=670BE9A2&_nc_sid=7a9f4b'
+        'joguman':'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsmEP1BHmJUhb-36Jn5JY9mcV-AOl9CUeOeQ&s'
     }
     reply = ['text',text] # 預設回覆的文字就是收到的訊息
     if text in message_data:
