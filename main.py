@@ -3,16 +3,11 @@ import time
 import requests
 from flask import Flask, request
 from linebot import LineBotApi, WebhookHandler
-#from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage, StickerSendMessage, ImageSendMessage, LocationSendMessage
-#from pyexpat.errors import messages
+from linebot.models import (MessageEvent, TextMessage, TextSendMessage,
+                            StickerSendMessage, ImageSendMessage, LocationSendMessage)
 import Email
-#import database
 from database import *
-#from  Email import *
-#import drive_image
 from drive_image import *
-import earthquake
 from earthquake import *
 
 app = Flask(__name__)
@@ -51,9 +46,9 @@ def linebot():
                                                                   preview_image_url=message[1]))
             elif message[0] == 'location': # 判斷回傳的是不是地點關鍵字
                 linebot_api.reply_message(token, LocationSendMessage(title=message[1]['title'],
-                                                                        address=message[1]['address'],
-                                                                        latitude=message[1]['latitude'],
-                                                                        longitude=message[1]['longitude']))
+                                                                     address=message[1]['address'],
+                                                                     latitude=message[1]['latitude'],
+                                                                     longitude=message[1]['longitude']))
 
         if json_data['events'][0]['message']['type'] == 'sticker':
             package = json_data['events'][0]['message']['packageId']    # 識別貼圖包的ID
